@@ -108,7 +108,7 @@
 					<h2>the past</h2>
 					User:
 					<pre><code contenteditable>
-&lt;form&gt;
+&lt;form method="POST" enctype="multipart/form-data" action="/upload.php"&gt;
     &lt;input type="file" name="files" /&gt;
     &lt;input type="submit" name="go" value="Upload stuff" /&gt;
 &lt;/form&gt;
@@ -121,62 +121,391 @@ $_FILES;
 move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $smth);
 					</code></pre>
 					
-					<h1 class="fragment">BOOOORING !</h1>
+					<h3 class="fragment">BOOOORING !</h3>
+					<h3 class="fragment">user understand</h3>
 				</section>
 
 				<section>
 				    <section>
-    					<h2>the present</h2>
-    					<p>User</p>
+    					<h2>the present - user</h2>
     					<pre><code contenteditable>
-&lt;form&gt;
+&lt;form method="POST" enctype="multipart/form-data" action="/upload.php"&gt;
     &lt;input type="file" name="files" /&gt;
     &lt;input type="submit" name="go" value="Upload stuff" /&gt;
 &lt;/form&gt;
         				</code></pre>
-        				<h1 class="fragment">still BOOOORING !</h1>
-        			</section>
-        			<section>
-        			    <h2>the present</h2>
-        			    
+        				<h3 class="fragment">still BOOOORING !</h3>
+        				<h3 class="fragment">but now user wants upload progressbar !</h3>
         			</section>
 				</section>
-				
 				<section>
-					
-				</section>
+					<section>
+    			    <h2>the present - user</h2>
+    			    <p>flash upload</p>
+    			    <pre><code contenteditable>
+var uploader = new plupload.Uploader({
+	runtimes : 'gears,html5,flash,silverlight,browserplus',
+	browse_button : 'pickfiles',
+	max_file_size : '10mb',
+	resize : {width : 320, height : 240, quality : 90},
+	url : 'upload.php',
+	flash_swf_url : 'plupload.flash.swf',
+	silverlight_xap_url : 'plupload.silverlight.xap',
+	filters : [
+	    {title : "Image files", extensions : "jpg,gif,png"},
+	    {title : "Zip files", extensions : "zip"}
+	]
+});
+    			    </code></pre>
+    			    <h2 class="fragment">not as much boring !</h2>
+    			    </section>
+    			    
+    			    <section class="actionscript">
+						<h2>the present - user</h2>
+	    			    <p>let's talk a bit about flash</p>
+	    			    <span>some ActionScript</span>
+	    			    <pre><code contenteditable>
+fireEvent("UploadProcess", {
+	id : file.id,
+	loaded : e.bytesLoaded,
+	size : e.bytesTotal
+});
+    			    	</code></pre>
+			    		<p>some JavaScript with jQuery</p>
+    			    	<pre><code contenteditable>
+$("object").bind("Flash:UploadProcess", function(up, flash_file) {
+	//flash_file.id
+	//flash_file.loaded
+	//flash_file.size
+});
+    			    	</code></pre>
+					</section>
+					<section class="actionscript">
+						<h2>the present - user</h2>
+	    			    <p>problems with flash ?</p>
+	    			    <p class="fragment"> hell yeah !</p>
+	    			    <ul>
+	    			    	<li class="fragment">uploading over 100MB</li>
+	    			    	<li class="fragment">unstable as hell</li>
+	    			    	<li class="fragment">problems with moving flash object</li>
+	    			    </ul>
+					</section>
+    			</section>
 
-				<section>
-					<h2>Fragmented Views</h2>
-					<p>Hit the next arrow...</p>
-					<p class="fragment">... to step through ...</p>
-					<ol>
-						<li class="fragment"><code>any type</code></li>
-						<li class="fragment"><em>of view</em></li>
-						<li class="fragment"><strong>fragments</strong></li>
-					</ol>
-				</section>
-				
-				<section>
-					<h2>Spectacular image!</h2>
-					<a class="image" href="http://hakim.se/experiments/html5/breakdom/" target="_blank">
-						<img width="320" height="412" src="https://s3.amazonaws.com/hakim-static/reveal-js/breakdom.png">
-					</a>
-				</section>
-				
-				<section>
-					<h2>Stellar Links</h2>
-					<ul>
-						<li><a href="https://github.com/hakimel/reveal.js">Source code on github</a></li>
-						<li><a href="http://hakim.se/projects/reveal-js">Read more on my site</a></li>
-						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
-					</ul>
-				</section>
-				
-				<section>
-					<h1>THE END</h1>
-					<h3 class="inverted">BY Hakim El Hattab / hakim.se</h3>
-				</section>
+    			<section>
+    				<section>
+	    				<h2>the present - server</h2>
+	    				<h1 class="fragment">
+	    					I love nginx !
+	    				</h1>
+	    				<h1 class="fragment">
+	    					Oh yes i do !
+	    				</h1>
+					</section>
+    				<section>
+	    				<h2>the present - server</h2>
+	    				<p>working nginx (with php-fpm)</p>
+	    				<pre><code contenteditable>
+server {
+    root /usr/share/nginx/www;
+    listen 80 default;
+    server_name localhost;
+
+    location / {
+        index index.html index.htm;
+        autoindex  on;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+    }
+}
+	    				</code></pre>
+	    				<p class="fragment">
+	    					so why it's so awesome ?
+	    				</p>
+    				</section>
+    				<section>
+	    				<h2>the present - server</h2>
+	    				<p>nginx awesomeness</p>
+	    				<pre><code contenteditable>
+location /upload {
+    upload_pass /html5-upload/multi_file_input.php;
+    upload_store /usr/share/nginx/www/uploads;
+    
+    upload_cleanup 500-505;
+    
+    track_uploads uploads 1s;
+}
+
+location = /progress {
+    report_uploads uploads;
+    upload_progress_json_output;
+}
+	    				</code></pre>
+	    				<p class="fragment">yeah some config so what ?</p>
+    				</section>
+    				<section>
+	    				<h2>the present - server</h2>
+		    			<p>nginx awesomeness</p>
+		    			<ol>
+		    				<li class="fragment">"Instead it uses a much more scalable event-driven (asynchronous) architecture"</li>
+		    				<li class="fragment">low memory usage</li>
+		    				<li class="fragment">upload_pass - send http request to anything</li>
+		    				<li class="fragment">upload_store - add "2 2" and upload files to "/00/00/"</li>
+		    				<li class="fragment">upload_cleanup - throw 500 and file will be delete</li>
+		    				<li class="fragment">oh and that track_upload and progress</li>
+		    			</ol>
+	    			</section>
+
+	    			<section>
+	    				<h2>the present - server+user</h2>
+	    				<p>nginx awesomeness + html</p>
+	    				<pre><code contenteditable>
+&lt;form method="POST" enctype="multipart/form-data" action="/upload?X-Progress-ID=12345"&gt;
+    &lt;input type="file" name="files" /&gt;
+    &lt;input type="submit" name="go" value="Upload stuff" /&gt;
+&lt;/form&gt;
+	    				</code></pre>
+	    				<p class="fragment">yup this is kinda boooring</p>
+	    				<p class="fragment">but part "X-Progress-ID=12345" is not boring</p>
+	    			</section>
+	    			<section>
+	    				<h2>the present - server+user</h2>
+	    				<p>nginx awesomeness + JavaScript</p>
+	    				<pre><code contenteditable class="javascript">
+$.get("/progress?X-Progress-ID=12345, function(data) {
+    console.log(data.state);
+    console.log(data.received);
+    console.log(data.size);	
+});
+	    				</code></pre>
+	    				<p class="fragment">and this is awesome</p>
+	    				<p class="fragment">use with:</p>
+	    				<pre class="fragment"><code contenteditable class="javascript">
+setInterval();
+//or
+setTimeout();
+	    				</code></pre>
+	    				<p class="fragment">and this is even more awesome</p>
+	    			</section>
+	    			<section>
+	    				<h2>the present - server</h2>
+	    				<p>the last "awesome" thing</p>
+	    				<pre><code contenteditable class="javascript">
+location ~ /avatars/.+_b\.gif {
+
+    error_page 404 =200 /avatars/default_b.gif;
+
+}
+	    				</code></pre>
+	    				<p class="fragment">if there is no avatar put default one</p>
+	    			</section>
+    			</section>
+    			<section>
+    				<section>
+	    				<h2>the "almost" present - php</h2>
+	    				<p class="fragment">php 5.4 have something for us</p>
+	    				<pre class="fragment"><code contenteditable>
+&lt;form action="/html5-upload/php_upload.php" method="POST" enctype="multipart/form-data"&gt;
+
+    &lt;input type="hidden" name="&lt;?php echo ini_get("session.upload_progress.name"); ?&gt;" value="demo"&gt;
+
+    &lt;input type="file" name="uploaded_file"&gt;
+
+    &lt;input type="submit" id="upload_button" value="Upload"&gt;
+
+&lt;/form&gt;
+	    				</code></pre>
+	    				<p class="fragment">again this is kinda boooring</p>
+	    				<p class="fragment">but "ini_get("session.upload_progress.name");" is not</p>
+    				</section>
+    				<section>
+	    				<h2>the "almost" present - php</h2>
+	    				<p class="fragment">php 5.4 php.ini settings</p>
+	    				<pre class="fragment"><code contenteditable>
+session.upload_progress.enabled = On
+session.upload_progress.cleanup = Off
+session.upload_progress.prefix = "upload_progress_"
+session.upload_progress.name = "PHP_SESSION_UPLOAD_PROGRESS"
+session.upload_progress.freq =  "1%"
+session.upload_progress.min_freq = "1"
+	    				</code></pre>
+	    				<p class="fragment">wait what ?</p>
+	    			</section>
+	    			<section>
+	    				<h2>the "almost" present - php</h2>
+	    				<p>php 5.4 $_SESSION</p>
+	    				<pre><code>
+{"upload_progress_demo": {
+
+    "start_time":1337194965,
+    "content_length":315,
+    "bytes_processed":315,
+    "done":true,
+    "files":[
+
+    	{"field_name":"uploaded_file",
+
+	    "name":"",
+	    "tmp_name":null,
+	    "error":4,
+	    "done":true,
+	    "start_time":1337194965,
+	    "bytes_processed":0}
+    ]}
+}
+	    				</code></pre>
+	    				<p class="fragment">and i like that</p>
+	    				<p class="fragment">and it's working with nginx</p>
+	    			</section>
+    			</section>
+    			<section>
+    				<section>
+    				<h2>the future</h2>
+    				<p>the future is mostly on user site for now - "html5"</p>
+    				<p class="fragment">but there is hdfs also on backend</p>
+    				<pre class="fragment"><code contenteditable>
+&lt;form method="POST" enctype="multipart/form-data" action="/upload.php"&gt;
+    &lt;input type="file" name="files" multiple/&gt;
+    &lt;input type="submit" name="go" value="Upload stuff" /&gt;
+&lt;/form&gt;
+    				</code></pre>
+    				<p class="fragment">again this boring stuff</p>
+    				<p class="fragment">but let's see what html5 file api has</p>
+    				</section>
+    				<section>
+	    				<h2>the future</h2>
+	    				<pre><code contenteditable>
+var imageType = /image.*/;
+
+$("#upload").change(function (event) {
+
+    $.each(this.files, function(index, file) {
+
+    	if (!(filesList instanceof FileList)) {
+            return false;
+        }
+
+    	if (file.type.match(imageType)) {
+
+    		var image = $("&lt;img /&gt;");
+    		var reader = new FileReader();
+    		
+    		reader.onload = function(e) {
+    			image.attr("src",e.target.result)
+    		};
+
+            reader.readAsDataURL(file);
+
+            $("body").append(image);
+    	}
+	});
+});
+	    				</code></pre>
+	    				<p class="fragment">so what this magic code do ?</p>
+		    		</section>
+		    		<section>
+	    				<h2>the future</h2>
+	    				<pre><code contenteditable>
+var events = ["dragover", "dragenter", "dragleave", "dragexit"];
+
+$.each(events, function(value, index) {
+	
+	$("#dropElement).bind(value, function(event) {
+    	$(this).css("background-color", "yellow");
+
+    	event.stopPropagation();
+
+    	event.preventDefault();
+	});
+
+});
+
+self.dropboxElement.bind("drop", function(event) {
+
+    console.log(event.originalEvent.dataTransfer.files);
+
+    event.stopPropagation();
+
+    event.preventDefault();
+});
+	    				</code></pre>
+	    				<p class="fragment">yaaaay new events !</p>
+	    				<p class="fragment">but wait how to upload stuff now ?</p>
+		    		</section>
+		    		<section>
+	    				<h2>the future</h2>
+	    				<pre><code contenteditable>
+var xhr = new XMLHttpRequest();
+xhr.open("post", "/html5-upload/file_api_test.php", true);
+xhr.setRequestHeader("Content-Type", "multipart/form-data");
+xhr.setRequestHeader("X-File-Name", uploadFile.name);
+xhr.setRequestHeader("X-File-Size", uploadFile.size);
+xhr.setRequestHeader("X-File-Type", uploadFile.type);
+
+$(xhr.upload).bind("progress", function(event) {
+    console.log("progress");
+    console.log(event.originalEvent.loaded);
+    console.log(event.originalEvent.total);
+});
+
+$(xhr).bind("load", function(event) {
+    console.log("done !");
+});
+
+xhr.send(uploadFile);
+	    				</code></pre>
+	    				<p class="fragment">yaaaay new events - again!</p>
+	    				<p class="fragment">yaaaay progress tracking - again!</p>
+	    				<p class="fragment">but this is so ugly !</p>
+		    		</section>
+		    		<section>
+	    				<h2>the future - server side</h2>
+	    				<pre><code contenteditable>
+$postdata = file_get_contents("php://input");
+
+file_put_contents("test.jpg", $postdata);
+	    				</code></pre>
+	    				<p class="fragment">the hell is this ?</p>
+	    				<p class="fragment">hopefully it will change</p>
+		    		</section>
+	    		</section>
+	    		<section>
+	    			<section>
+	    				<h2>the last - database</h2>
+	    				<p class="centerify">Remember ! 
+	    					<br />Every time you put image into DB a unicorn dies !
+	    				</p>
+	    			</section>
+	    			<section>
+	    				<h2>the last - database</h2>
+	    				<p>just a few tips</p>
+	    				<ul>
+		    				<li class="fragment">try not to write paths into db (use usernames etc)</li>
+		    				<li class="fragment">use image versioning as rarely as possible</li>
+		    				<li class="fragment">copy informations about images</li>
+		    			</ul>
+	    			</section>
+	    		</section>
+	    		<section>
+	    			<h2>presentation created with:</h2>
+	    			<ul style="list-style: none">
+	    				<li><a href="http://lab.hakim.se/reveal-js/" target="_blank">reveal.js</a></li>
+	    				<li><a href="http://softwaremaniacs.org/soft/highlight/en/" target="_blank">highlight.js</a></li>
+	    				<li><a href="http://jquery.com/" target="_blank">jquery</a></li>
+	    			</ul>
+	    		</section>
+	    		<section>
+	    			<h1>Thanx !</h1>
+	    			<p class="centerify">
+	    				Please help me to be a better speaker:<br />
+	    				<a href="https://joind.in/6470" target="_blank">https://joind.in/6470</a>
+	    			</p>
+
+	    		</section>
 			</div>
 
 			<!-- The navigational controls UI -->
