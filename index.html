@@ -1,0 +1,238 @@
+<!doctype html>  
+<html lang="en">
+	
+	<head>
+		<meta charset="utf-8">
+		
+		<title>Static stuff - upload, server and mysql</title>
+
+		<meta name="description" content="">
+		<meta name="author" content="Rafał Malinowski">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+		
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/print.css" type="text/css" media="print">
+		<link rel="stylesheet" href="css/zenburn.css">
+
+		<style>
+    		@font-face{ 
+    		    font-family: 'WebIconFonts';
+    		    src: url('assets/fonts/webiconfonts.eot');
+    		    src: url('assets/fonts/WebIconFonts.eot?') format('eot'),
+    		         url('assets/fonts/WebIconFonts.woff') format('woff'),
+    		         url('assets/fonts/WebIconFonts.ttf') format('truetype');
+    		}
+    		
+    		.sm {
+    		    font-family: WebIconFonts;
+    		}
+    		
+    		code {
+    		    font-size: 20px;
+    		    text-align: left;
+    		}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script>
+    		$(function() {
+    		    $(".centerify").each(function(elem, index) {
+    		    console.log($(this).outerHeight());
+        		    $(this).css("padding-top", ($(document).height() / 2 - 122 +"px"));
+    		    });
+    		    
+    		    $(".tobottom").each(function(elem, index) {
+    		        $(this).css("padding-top", ($(document).height() - 300 +"px"));
+    		    });
+    		});
+		</script>
+	</head>
+	
+	<body>
+		
+		<div id="reveal">
+			<div class="state-background"></div>
+			
+			<div class="slides">
+				<section>
+					<h1>Static stuff</h1>
+					<h3 class="">user, server and mysql</h3>
+					
+					<h5 style="color: #a0a0a0;" class="tobottom">Rafał 'afterdesign' Malinowski</h5>
+				</section>
+				
+				<section>
+    				<section>
+	    				<h1 class="centerify">HI!</h1>
+	    			</section>
+					<section>
+						<h1 class="centerify">How are you !</h1>
+					</section>
+				</section>
+				
+				
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section data-state="try_center">
+					    <h2>who am i</h2>
+					    <ol>
+					    	<li class="fragment">Rafał Malinowski</li>
+					    	<li class="fragment"><span class="sm">t</span><a href="http://twitter.com/afterdesign">afterdesign</a></li>
+					    	<li class="fragment"><a href="mailto:rafal@malinowski.be">rafal@malinowski.be</a></li>
+					    </ol>
+					</section>
+					<section>
+					    <h2>I work here</h2>
+					    <img src="images/RS_logo_rb.png" />
+					</section>
+					<section>
+					    <h2>red sky ? what ?</h2>
+					    <img src="images/rs.jpg" />
+					</section>
+					<section>
+					    <h2>what am i doin in Red Sky ?</h2>
+					    <ul>
+					    	<li>JavaScript</li>
+					    	<li>PHP</li>
+					    	<li>Python</li>
+					    	<li>Project managing</li>
+					    </ul>
+					</section>
+				</section>
+
+				<section>
+					<h2>the past</h2>
+					User:
+					<pre><code contenteditable>
+&lt;form&gt;
+    &lt;input type="file" name="files" /&gt;
+    &lt;input type="submit" name="go" value="Upload stuff" /&gt;
+&lt;/form&gt;
+					</code></pre>
+
+					Server:
+					<pre><code contenteditable>
+$_FILES;
+
+move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $smth);
+					</code></pre>
+					
+					<h1 class="fragment">BOOOORING !</h1>
+				</section>
+
+				<section>
+				    <section>
+    					<h2>the present</h2>
+    					<p>User</p>
+    					<pre><code contenteditable>
+&lt;form&gt;
+    &lt;input type="file" name="files" /&gt;
+    &lt;input type="submit" name="go" value="Upload stuff" /&gt;
+&lt;/form&gt;
+        				</code></pre>
+        				<h1 class="fragment">still BOOOORING !</h1>
+        			</section>
+        			<section>
+        			    <h2>the present</h2>
+        			    
+        			</section>
+				</section>
+				
+				<section>
+					
+				</section>
+
+				<section>
+					<h2>Fragmented Views</h2>
+					<p>Hit the next arrow...</p>
+					<p class="fragment">... to step through ...</p>
+					<ol>
+						<li class="fragment"><code>any type</code></li>
+						<li class="fragment"><em>of view</em></li>
+						<li class="fragment"><strong>fragments</strong></li>
+					</ol>
+				</section>
+				
+				<section>
+					<h2>Spectacular image!</h2>
+					<a class="image" href="http://hakim.se/experiments/html5/breakdom/" target="_blank">
+						<img width="320" height="412" src="https://s3.amazonaws.com/hakim-static/reveal-js/breakdom.png">
+					</a>
+				</section>
+				
+				<section>
+					<h2>Stellar Links</h2>
+					<ul>
+						<li><a href="https://github.com/hakimel/reveal.js">Source code on github</a></li>
+						<li><a href="http://hakim.se/projects/reveal-js">Read more on my site</a></li>
+						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
+					</ul>
+				</section>
+				
+				<section>
+					<h1>THE END</h1>
+					<h3 class="inverted">BY Hakim El Hattab / hakim.se</h3>
+				</section>
+			</div>
+
+			<!-- The navigational controls UI -->
+			<aside class="controls">
+				<a class="left" href="#">&#x25C4;</a>
+				<a class="right" href="#">&#x25BA;</a>
+				<a class="up" href="#">&#x25B2;</a>
+				<a class="down" href="#">&#x25BC;</a>
+			</aside>
+
+			<!-- Displays presentation progress, max value changes via JS to reflect # of slides -->
+			<div class="progress"><span></span></div>
+			
+		</div>
+		
+		<script src="js/reveal.min.js"></script>
+
+		<script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+		<script src="js/classList.js"></script>
+		
+		<script>
+			// Parse the query string into a key/value object
+			var query = {};
+			location.search.replace( /[A-Z0-9]+?=(\w*)/gi, function(a) {
+				query[ a.split( '=' ).shift() ] = a.split( '=' ).pop();
+			} );
+			
+			Reveal.initialize({
+				// Display controls in the bottom right corner
+				controls: true,
+
+				// Display a presentation progress bar
+				progress: true,
+
+				// If true; each slide will be pushed to the browser history
+				history: true,
+
+				// Loops the presentation, defaults to false
+				loop: false,
+
+				// Flags if mouse wheel navigation should be enabled
+				mouseWheel: false,
+
+				// Apply a 3D roll to links on hover
+				rollingLinks: true,
+
+				// UI style
+				theme: query.theme || 'default', // default/neon
+
+				// Transition style
+				transition: query.transition || 'concave' // default/cube/page/concave/linear(2d)
+			});
+
+			hljs.initHighlightingOnLoad();
+			hljs.tabReplace = '    ';
+		</script>
+
+	</body>
+</html>
